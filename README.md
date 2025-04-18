@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# TicketWave – Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**TicketWave** è una piattaforma moderna per la **rivendita sicura di biglietti per concerti, eventi sportivi e spettacoli**, creata per facilitare l'incontro tra chi vende e chi acquista biglietti non più utilizzabili.
 
-## Available Scripts
+Questa repository contiene il **frontend React** del progetto, progettato con un'interfaccia responsive, moderna e user-friendly.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Tecnologie principali
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-   **React 18**
+-   **React Bootstrap** – layout responsive e componenti UI
+-   **Axios** – gestione richieste HTTP verso il backend
+-   **Formik + Yup** – validazione dei form di login/registrazione
+-   **React Router DOM** – routing client-side
+-   **CSS personalizzato** – animazioni, effetti visivi e stile custom
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Struttura delle cartelle
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+ticketwave_frontend/
+│
+├── public/
+│   └── images/               # Immagini pubbliche (concert.jpg, ecc.)
+│
+├── src/
+│   ├── components/           # Componenti riutilizzabili (HeroSection, ecc.)
+│   ├── pages/                # Pagine principali (HomePage, LoginPage, ecc.)
+│   ├── App.js                # Routing principale
+│   ├── index.js              # Entry point React
+│   └── index.css             # Stili globali
+```
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🔧 Funzionalità implementate
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-   Hero Section con sfondo dinamico e CTA
+-   Sezione “Come funziona”
+-   Elenco biglietti in primo piano (mock)
+-   Design responsivo e coerente
+-   Integrazione GitHub + SSH
+-   Setup per supporto login/register (in corso)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 🔗 Collegamento al backend
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Questo frontend comunica con il backend Node.js/Express (in altro repo) tramite le seguenti API:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+-   `POST /api/register` → Registrazione nuovo utente
+-   `POST /api/login` → Login utente con JWT
+-   `GET /api/tickets` → Recupero biglietti disponibili
+-   `POST /api/purchase` → Avvio acquisto biglietto
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 📌 Autore
 
-## Learn More
+**AndreiB (andres050588)**  
+Frontend Developer – App Monolitica → Microservizi
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Licenza
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Questo progetto è distribuito con licenza **MIT**.  
+Sentiti libero di copiarlo, modificarlo e condividerlo.
