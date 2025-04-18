@@ -1,0 +1,168 @@
+body {
+    font-family: "Segoe UI", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+    margin: 0;
+    padding: 0;
+}
+
+.hero-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    text-align: center;
+    padding: 120px 20px;
+    animation: fadeInHero 1.5s ease-in-out both;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+    margin-top: 1rem;
+}
+.hero-section .btn {
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+}
+
+.hero-section .btn-primary {
+    background-color: #ff3366;
+    border: none;
+    color: #fff;
+}
+
+.hero-section .btn-primary:hover {
+    background-color: #e02e5d;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 51, 102, 0.5);
+}
+
+.hero-section .btn-light {
+    background-color: #fff;
+    color: #000;
+    border: none;
+}
+
+.hero-section .btn-light:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.card {
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.how-it-works {
+    padding: 60px 20px;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.how-it-works h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+    color: #212529;
+}
+
+.step {
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    background-color: #f8f9fa;
+    border-radius: 12px;
+}
+
+.step h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #0d6efd;
+}
+
+.step p {
+    color: #495057;
+    font-size: 1rem;
+}
+
+.featured-tickets {
+    padding: 60px 20px;
+    background-color: #f8f9fa;
+}
+
+.featured-tickets h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #212529;
+}
+
+.ticket-card {
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+}
+
+.ticket-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.ticket-card .card-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.ticket-card .card-text {
+    color: #495057;
+    font-size: 1rem;
+}
+
+.ticket-card .btn {
+    border-radius: 50px;
+    font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.3s ease-in-out;
+}
+
+@keyframes fadeInHero {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
