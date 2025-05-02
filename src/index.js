@@ -2,7 +2,10 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import "./index.css"
 import App from "./App"
+import { axiosTokenInterceptor } from "./utils/AxiosTokenInterceptor.js"
 // import reportWebVitals from "./reportWebVitals"
+
+axiosTokenInterceptor()
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(

@@ -5,16 +5,13 @@ export default function HeroSection() {
         <div
             className="hero-section text-light text-center py-5"
             style={{
-                backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/images/concert.jpg)",
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundAttachment: "fixed"
+                backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/images/concert.jpg)"
             }}
         >
             <Container>
                 <h1 className="display-4 fw-bold">Rivendi o acquista biglietti in modo sicuro</h1>
                 <p className="lead mt-3">Concerti, partite ed eventi. Da utente a utente.</p>
-                <div className="mt-4">
+                <div className="mt-4 btns">
                     <Button variant="primary" href="/tickets" className="me-3">
                         🎟️ Sfoglia Biglietti
                     </Button>

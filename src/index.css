@@ -1,13 +1,11 @@
-body {
-    font-family: "Segoe UI", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
-    color: #212529;
+* {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
-
 .hero-section {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+    background-color: #000; /* Fallback color if the image is missing */
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -26,25 +24,30 @@ body {
     font-size: 1.25rem;
     margin-top: 1rem;
 }
+.hero-section .btns {
+    margin-top: 40px;
+}
 .hero-section .btn {
     font-weight: 600;
     font-size: 1.1rem;
     padding: 0.75rem 1.5rem;
-    border-radius: 50px;
+    border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    margin: 0 10px;
 }
 
 .hero-section .btn-primary {
-    background-color: #ff3366;
+    background-color: #ffcc00;
     border: none;
     color: #fff;
 }
 
 .hero-section .btn-primary:hover {
-    background-color: #e02e5d;
+    background-color: #cbbe09;
     transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(255, 51, 102, 0.5);
+    box-shadow: 0 6px 20px rgba(247, 249, 114, 0.5);
 }
 
 .hero-section .btn-light {
@@ -154,6 +157,53 @@ body {
     font-weight: 500;
     padding: 0.5rem 1.2rem;
     transition: all 0.3s ease-in-out;
+}
+
+.navbar {
+    background-color: #111111a8;
+    width: 100%;
+    padding: 1rem 2rem;
+    position: sticky;
+    z-index: 100;
+    border-bottom: #ffcc00 2px solid;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.navbar-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffcc00;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 60px;
+    display: inline-block;
+    border: red solid 1px;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 3rem;
+}
+
+.navbar-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    font-weight: bold;
+}
+
+.navbar-links a:hover {
+    color: #ffcc00;
 }
 
 @keyframes fadeInHero {
