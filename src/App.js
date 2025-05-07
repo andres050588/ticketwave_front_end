@@ -9,6 +9,8 @@ import OrdersPage from "./pages/OrdersPage.js"
 import SellPage from "./pages/SellPage.js"
 import ProfilePage from "./pages/ProfilePage.js"
 import { AuthProvider } from "./utils/AuthContext.js"
+import PrivacyPage from "./pages/PrivacyPage.js"
+import TermsPage from "./pages/TermsPage.js"
 
 const router = createBrowserRouter([
     {
@@ -22,7 +24,9 @@ const router = createBrowserRouter([
             { path: "sell", element: <SellPage /> },
             { path: "tickets", element: <TicketPage /> },
             { path: "tickets/:id", element: <TicketDetailPage /> },
-            { path: "orders", element: <OrdersPage /> }
+            { path: "orders", element: <OrdersPage /> },
+            { path: "privacy", element: <PrivacyPage /> },
+            { path: "terms", element: <TermsPage /> }
         ]
     }
 ])

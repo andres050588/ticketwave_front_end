@@ -4,6 +4,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+a {
+    text-decoration: none;
+}
+
 .hero-section {
     background-color: #000; /* Fallback color if the image is missing */
     background-size: cover;
@@ -204,6 +208,10 @@
 
 .navbar-links a:hover {
     color: #ffcc00;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }
 
 @keyframes fadeInHero {

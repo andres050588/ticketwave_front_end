@@ -1,15 +1,23 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import axios from "axios"
 import { Container, Form, Button, Alert } from "react-bootstrap"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../utils/AuthContext.js"
+import { useAuthRequest } from "../hooks/useAuthRequest.js"
 
 export default function SellPage() {
+    const { user } = useAuth()
     const [success, setSuccess] = useState(null)
-    const [error, setError] = useState(null)
     const navigate = useNavigate()
     const [preview, setPreview] = useState(null)
+    const { authorizedRequest, errorMessage } = useAuthRequest()
+
+    useEffect(() => {
+        if (!user) {
+            navigate("/login")
+        }
+    }, [user, navigate])
 
     const formik = useFormik({
         initialValues: {
@@ -25,33 +33,37 @@ export default function SellPage() {
         }),
         onSubmit: async values => {
             try {
-                const token = localStorage.getItem("token")
-
                 const formData = new FormData()
                 formData.append("title", values.title)
                 formData.append("price", values.price)
                 formData.append("eventDate", values.eventDate)
                 formData.append("image", values.image)
 
-                const response = await axios.post("http://localhost:3001/api/tickets", formData, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "multipart/form-data"
-                    }
+                await authorizedRequest("http://localhost:3001/api/tickets/", "post", {
+                    data: formData,
+                    headers: { "Content-Type": "multipart/form-data" }
                 })
                 setSuccess("Biglietto pubblicato con successo!")
                 formik.resetForm()
                 setTimeout(() => navigate("/tickets"), 2000)
             } catch (error) {
-                setError(error.response?.data?.error || "Errore durante la pubblicazione")
+                console.error(error.response?.data?.error || "Errore durante la pubblicazione")
             }
         }
     })
 
+    if (!user) {
+        return (
+            <Container className="mt-5 text-center">
+                <Alert variant="warning">Devi essere autenticato per pubblicare un biglietto.</Alert>
+            </Container>
+        )
+    }
+
     return (
         <Container style={{ maxWidth: "500px", marginTop: "60px" }}>
             <h2 className="mb-4 text-center">Pubblica un biglietto</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
+            {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
             {success && <Alert variant="success">{success}</Alert>}
 
             <Form onSubmit={formik.handleSubmit}>

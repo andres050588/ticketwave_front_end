@@ -1,30 +1,31 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
 import { Container, Card, Button, Spinner, Alert } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
+import { useAuthRequest } from "../hooks/useAuthRequest.js"
+import { useAuth } from "../utils/AuthContext.js"
 
 export default function ProfilePage() {
     const [profile, setProfile] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const { authorizedRequest, errorMessage } = useAuthRequest()
+    const { logout } = useAuth()
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        const token = localStorage.getItem("token")
-        if (!token) {
-            navigate("/login")
-            return
-        }
-
         const fetchProfile = async () => {
             try {
-                const response = await axios.get("/api/profile", {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
-                setProfile(response.data)
+                const data = await authorizedRequest("/api/profile")
+                if (data) setProfile(data)
             } catch (error) {
-                setError("Errore nel recupero del profilo")
+                if (error.response?.status === 404) {
+                    setError("Utente non trovato. Probabilmente non esiste nella Data Base")
+                    localStorage.removeItem("token")
+                    setTimeout(() => navigate("/register"), 3000) // redirect automatico dopo 3s
+                } else {
+                    setError("Errore nel recupero del profilo")
+                }
             } finally {
                 setLoading(false)
             }
@@ -50,7 +51,7 @@ export default function ProfilePage() {
                             variant="outline-danger"
                             className="mt-3"
                             onClick={() => {
-                                localStorage.removeItem("token")
+                                logout()
                                 navigate("/login")
                             }}
                         >

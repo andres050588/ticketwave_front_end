@@ -40,7 +40,7 @@ export default function AppNavbar() {
                     {user ? (
                         <>
                             <Nav.Link className="nav-link" as={Link} to="/profile">
-                                👤 Ciao, {user.name}
+                                👤 Ciao, {user?.name || "ospite"}
                             </Nav.Link>
                             <Button className="logout-button ms-2" size="sm" onClick={handleLogout}>
                                 Logout

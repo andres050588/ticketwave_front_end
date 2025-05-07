@@ -4,11 +4,13 @@ import axios from "axios"
 import { useNavigate, useLocation, Link } from "react-router-dom"
 import { Container, Form, Button, Alert } from "react-bootstrap"
 import { useState, useEffect } from "react"
+import { useAuth } from "../utils/AuthContext.js"
 
 export default function LoginPage() {
     const navigate = useNavigate()
     const [error, setError] = useState(null)
     const location = useLocation()
+    const { login } = useAuth()
 
     useEffect(() => {
         const token = localStorage.getItem("token")
@@ -29,7 +31,8 @@ export default function LoginPage() {
         onSubmit: async values => {
             try {
                 const response = await axios.post("/api/login", values)
-                localStorage.setItem("token", response.data.token)
+                localStorage.setItem("token", response.data.token) // Per aggiornare lo stato globale
+                login(response.data.token)
                 navigate(location.state?.from || "/tickets")
             } catch (error) {
                 setError(error.response?.data?.error || "Credenziali non valide")

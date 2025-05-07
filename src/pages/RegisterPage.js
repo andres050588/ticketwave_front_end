@@ -4,8 +4,10 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { Container, Form, Button, Alert } from "react-bootstrap"
 import { useState } from "react"
+import { useAuth } from "../utils/AuthContext.js"
 
 export default function RegisterPage() {
+    const { login } = useAuth()
     const navigate = useNavigate()
     const [error, setError] = useState(null)
 
@@ -24,6 +26,7 @@ export default function RegisterPage() {
             try {
                 const response = await axios.post("http://localhost:3001/api/register", values)
                 localStorage.setItem("token", response.data.token)
+                login(response.data.token)
                 navigate("/tickets")
             } catch (error) {
                 setError(error.response?.data?.error || "Errore durante la registrazione")
