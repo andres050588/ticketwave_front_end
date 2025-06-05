@@ -1,10 +1,10 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { Container, Form, Button, Alert } from "react-bootstrap"
 import { useState } from "react"
 import { useAuth } from "../utils/AuthContext.js"
+import axios_api from "../api/api.js"
 
 export default function RegisterPage() {
     const { login } = useAuth()
@@ -24,7 +24,7 @@ export default function RegisterPage() {
         }),
         onSubmit: async values => {
             try {
-                const response = await axios.post("http://localhost:3001/api/register", values)
+                const response = await axios_api.post("http://localhost:3001/api/register", values)
                 localStorage.setItem("token", response.data.token)
                 login(response.data.token)
                 navigate("/tickets")

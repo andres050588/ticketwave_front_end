@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
         if (token) {
             try {
                 const decoded = jwtDecode(token)
-                setUser({ name: decoded.name, email: decoded.email })
+                setUser({ id: decoded.userId, name: decoded.name, email: decoded.email })
             } catch {
                 localStorage.removeItem("token")
             }
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
     const login = token => {
         localStorage.setItem("token", token)
         const decoded = jwtDecode(token)
-        setUser({ name: decoded.name, email: decoded.email })
+        setUser({ id: decoded.userId, name: decoded.name, email: decoded.email })
     }
 
     const logout = () => {

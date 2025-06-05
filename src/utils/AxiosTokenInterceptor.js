@@ -1,14 +1,18 @@
-import axios from "axios"
+import axios_api from "../api/api"
 
 export const axiosTokenInterceptor = () => {
-    axios.interceptors.response.use(
+    axios_api.interceptors.response.use(
         response => response,
         error => {
-            if (error.response && error.response.status === 403) {
+            const currentPath = window.location.pathname
+
+            // Evita redirect se già nella pagina di login
+            if (error.response && error.response.status === 401 && currentPath !== "/login") {
                 console.warn("Accesso negato, redirect al login...")
-                localStorage.removeItem("token") // Si elimina il token vecchio
-                window.location.href = "/login" // Redirezione manuale
+                localStorage.removeItem("token")
+                window.location.href = "/login"
             }
+
             return Promise.reject(error)
         }
     )

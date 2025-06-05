@@ -1,39 +1,53 @@
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
-import axios from "axios"
+import { useCallback, useState } from "react"
+import axios_api from "../api/api.js"
 
 export const useAuthRequest = () => {
     const navigate = useNavigate()
     const [errorMessage, setErrorMessage] = useState(null)
 
-    const authorizedRequest = async (url, method = "get", config = {}) => {
-        const token = localStorage.getItem("token")
+    const authorizedRequest = useCallback(
+        async (url, method = "get", config = {}) => {
+            const token = localStorage.getItem("token")
+            try {
+                const baseURL = process.env.REACT_APP_API_URL?.replace(/\/$/, "") //|| "http://localhost:3001"
+                const fullUrl = url.startsWith("http") ? url : `${baseURL}/${url.replace(/^\//, "")}`
 
-        try {
-            const response = await axios({
-                method,
-                url,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    ...(config.headers || {})
-                },
-                ...config
-            })
-            return response.data
-        } catch (error) {
-            const status = error.response?.status
+                const response = await axios_api({
+                    method,
+                    url: fullUrl,
+                    headers: {
+                        ...(config.headers || {}),
+                        ...(token && { Authorization: `Bearer ${token}` })
+                    },
+                    ...config
+                })
+                return response.data
+            } catch (error) {
+                const status = error.response?.status
 
-            if ([401, 403, 404].includes(status)) {
-                setErrorMessage("Utente non autorizzato o non trovato.")
-                localStorage.removeItem("token")
-                setTimeout(() => navigate("/login"), 2500)
-            } else {
-                setErrorMessage("Errore durante la richiesta.")
+                if (status === 401) {
+                    if (window.location.pathname !== "/login") {
+                        setErrorMessage("Sessione scaduta. Verrai reindirizzato al login.")
+                        localStorage.removeItem("token")
+
+                        setTimeout(() => {
+                            navigate("/login")
+                        }, 1500)
+                    }
+                } else if (status === 403) {
+                    // L'utente rimane loggato e mostra solo il messaggio
+                    setErrorMessage(error.response?.data?.error || "Accesso negato.")
+                } else if (status === 404) {
+                    setErrorMessage("Risorsa non trovata.")
+                } else {
+                    setErrorMessage("Errore durante la richiesta.")
+                }
+                return null
             }
-
-            return null
-        }
-    }
+        },
+        [navigate]
+    )
 
     return { authorizedRequest, errorMessage }
 }

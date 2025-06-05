@@ -2,6 +2,8 @@ import { useEffect, useState, useCallback } from "react"
 import { Container, Card, Spinner, Alert, Row, Col, Badge, Button } from "react-bootstrap"
 import { useAuthRequest } from "../hooks/useAuthRequest.js"
 
+const API_URL = process.env.REACT_APP_API_URL //|| "http://localhost:3001"
+
 export default function OrdersPage() {
     const [orders, setOrders] = useState([])
     const [loading, setLoading] = useState(true)
@@ -9,10 +11,12 @@ export default function OrdersPage() {
 
     const { authorizedRequest, errorMessage } = useAuthRequest()
 
-    const fetchOrders = useCallback(async () => {
+    // Funzione riutilizzabile caricamento ordini
+    const loadOrders = useCallback(async () => {
+        setLoading(true)
         try {
-            const data = await authorizedRequest("http://localhost:3001/api/orders")
-            if (data) setOrders(data)
+            const data = await authorizedRequest(`/api/orders`)
+            if (Array.isArray(data)) setOrders(data)
         } catch {
             console.error("Errore nel recupero degli ordini")
         } finally {
@@ -20,28 +24,40 @@ export default function OrdersPage() {
         }
     }, [authorizedRequest])
 
+    // Caricamento iniziale ordini
     useEffect(() => {
-        fetchOrders()
-    }, [fetchOrders])
+        loadOrders()
+    }, [loadOrders])
 
+    // auto-hide messaggio success
+    useEffect(() => {
+        if (success) {
+            const timer = setTimeout(() => setSuccess(null), 10000)
+            return () => clearTimeout(timer)
+        }
+    }, [success])
+
+    // complete order
     const handleComplete = async orderId => {
         try {
-            const result = await authorizedRequest(`http://localhost:3001/api/orders/${orderId}/complete`, "post")
+            const result = await authorizedRequest(`/api/orders/${orderId}/complete`, "post")
+
             if (result) {
                 setSuccess("Ordine completato con successo")
-                fetchOrders()
+                await loadOrders() // Caricamento ordini dopo aver completato ordine
             }
         } catch (error) {
             console.error(error.response?.data?.error || "Errore nel completamento ordine")
         }
     }
 
+    // cancellazione order
     const handleCancel = async orderId => {
         try {
-            const result = await authorizedRequest(`http://localhost:3001/api/orders/${orderId}`, "delete")
+            const result = await authorizedRequest(`/api/orders/${orderId}`, "delete")
             if (result) {
                 setSuccess("Ordine annullato")
-                fetchOrders()
+                await loadOrders() // Caricamento ordini dopo aver annullato un ordine
             }
         } catch (error) {
             console.error(error.response?.data?.error || "Errore nell'annullamento ordine")
@@ -59,7 +75,7 @@ export default function OrdersPage() {
             )}
             {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
             {success && <Alert variant="success">{success}</Alert>}
-            {orders.length === 0 && !loading && <Alert variant="info">Nessun ordine trovato</Alert>}
+            {!loading && orders.length === 0 && <Alert variant="info">Nessun ordine trovato</Alert>}
 
             <Row>
                 {orders.map(order => (
@@ -74,7 +90,7 @@ export default function OrdersPage() {
                                 {order.Ticket.eventDate && <Card.Text>Data evento: {new Date(order.Ticket.eventDate).toLocaleString("it-IT")}</Card.Text>}
                                 {order.status === "impegnato" && (
                                     <>
-                                        <Button variant="success" className="me-2" size="sm" onClick={() => handleComplete(order.id)}>
+                                        <Button variant="success" size="sm" className="me-2" onClick={() => handleComplete(order.id)}>
                                             Completa
                                         </Button>
                                         <Button variant="danger" size="sm" onClick={() => handleCancel(order.id)}>

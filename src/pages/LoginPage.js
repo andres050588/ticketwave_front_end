@@ -1,10 +1,10 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import axios from "axios"
 import { useNavigate, useLocation, Link } from "react-router-dom"
 import { Container, Form, Button, Alert } from "react-bootstrap"
 import { useState, useEffect } from "react"
 import { useAuth } from "../utils/AuthContext.js"
+import axios_api from "../api/api.js"
 
 export default function LoginPage() {
     const navigate = useNavigate()
@@ -30,12 +30,20 @@ export default function LoginPage() {
         }),
         onSubmit: async values => {
             try {
-                const response = await axios.post("/api/login", values)
-                localStorage.setItem("token", response.data.token) // Per aggiornare lo stato globale
+                const response = await axios_api.post("/api/login", values)
+                localStorage.setItem("token", response.data.token)
                 login(response.data.token)
                 navigate(location.state?.from || "/tickets")
             } catch (error) {
-                setError(error.response?.data?.error || "Credenziali non valide")
+                if (error.response?.status === 401 || error.response?.status === 404) {
+                    setError("Email o password non corretti")
+                } else {
+                    setError("Errore del server. Riprova più tardi.")
+                }
+
+                setTimeout(() => {
+                    setError(null)
+                }, 5000)
             }
         }
     })
@@ -43,6 +51,7 @@ export default function LoginPage() {
     return (
         <Container style={{ maxWidth: "400px", marginTop: "60px" }}>
             <h2 className="mb-4 text-center">Login</h2>
+
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={formik.handleSubmit}>
                 <Form.Group className="mb-3">
