@@ -15,6 +15,12 @@ export default function TicketDetailPage() {
     const [success, setSuccess] = useState(null)
 
     useEffect(() => {
+        if (!user) {
+            navigate("/login")
+        }
+    }, [user, navigate])
+
+    useEffect(() => {
         const fetchTicket = async () => {
             try {
                 const response = await axios_api.get(`/api/tickets/${id}`)
