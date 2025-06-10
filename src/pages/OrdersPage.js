@@ -2,8 +2,6 @@ import { useEffect, useState, useCallback } from "react"
 import { Container, Card, Spinner, Alert, Row, Col, Badge, Button } from "react-bootstrap"
 import { useAuthRequest } from "../hooks/useAuthRequest.js"
 
-const API_URL = process.env.REACT_APP_API_URL //|| "http://localhost:3001"
-
 export default function OrdersPage() {
     const [orders, setOrders] = useState([])
     const [loading, setLoading] = useState(true)
