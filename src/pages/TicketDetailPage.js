@@ -8,6 +8,7 @@ export default function TicketDetailPage() {
     const { id } = useParams()
     const navigate = useNavigate()
     const { user } = useAuth()
+
     const [ticket, setTicket] = useState(null)
     const [isDisabled, setIsDisabled] = useState(false)
     const [loading, setLoading] = useState(true)
@@ -17,10 +18,8 @@ export default function TicketDetailPage() {
     useEffect(() => {
         if (!user) {
             navigate("/login")
+            return // interrompe il resto dell'useEffect
         }
-    }, [user, navigate])
-
-    useEffect(() => {
         const fetchTicket = async () => {
             try {
                 const response = await axios_api.get(`/api/tickets/${id}`)
@@ -32,9 +31,9 @@ export default function TicketDetailPage() {
             }
         }
         fetchTicket()
-    }, [id])
+    }, [id, user, navigate])
 
-    if (loading || !user || !ticket) {
+    if (loading || !ticket) {
         return (
             <Container className="my-5 text-center">
                 <Spinner animation="border" />
@@ -45,22 +44,8 @@ export default function TicketDetailPage() {
     const isOwner = String(user.id) === String(ticket.venditore?.id)
 
     const handlePurchase = async () => {
-        const token = localStorage.getItem("token")
-        if (!token) {
-            navigate("/login")
-            return
-        }
-
         try {
-            await axios_api.post(
-                "/api/orders",
-                { ticketId: ticket.id },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            )
+            await axios_api.post("/api/orders", { ticketId: ticket.id })
             setSuccess("Ordine creato! Hai 15 minuti per completare l'acquisto")
             setIsDisabled(true)
             setTimeout(() => navigate("/orders"), 2000)

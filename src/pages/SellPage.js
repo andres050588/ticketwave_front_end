@@ -16,7 +16,6 @@ export default function SellPage() {
 
     useEffect(() => {
         const token = localStorage.getItem("token")
-        console.log("Token da localStorage:", token)
         if (!user && !token) {
             console.warn("Utente non autenticato, redirect...")
             navigate("/login")
@@ -112,7 +111,7 @@ export default function SellPage() {
 
                 {preview && (
                     <div className="text-center mb-4">
-                        <img src={preview} alt="Anteprima" style={{ maxHeight: "200px", borderRadius: "12px", boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }} />
+                        <img src={preview} alt="Anteprima" style={{ maxHeight: "200px", borderRadius: "12px" }} />
                         <div className="mt-2">
                             <Button
                                 variant="outline-danger"
