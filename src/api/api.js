@@ -1,8 +1,8 @@
 import axios from "axios"
 
 const axios_api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-    withCredentials: true // opzionale
+    baseURL: "/api", // tutti i microservizi stanno dietro /api
+    withCredentials: true
 })
 // Interceptor sulle richieste per aggiungere il token
 axios_api.interceptors.request.use(

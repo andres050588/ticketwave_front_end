@@ -22,7 +22,7 @@ export default function TicketDetailPage() {
         }
         const fetchTicket = async () => {
             try {
-                const response = await axios_api.get(`/api/tickets/${id}`)
+                const response = await axios_api.get(`/tickets/${id}`)
                 setTicket(response.data)
             } catch (error) {
                 setError("Biglietto non trovato")
@@ -45,7 +45,7 @@ export default function TicketDetailPage() {
 
     const handlePurchase = async () => {
         try {
-            await axios_api.post("/api/orders", { ticketId: ticket.id })
+            await axios_api.post("/orders", { ticketId: ticket.id })
             setSuccess("Ordine creato! Hai 15 minuti per completare l'acquisto")
             setIsDisabled(true)
             setTimeout(() => navigate("/orders"), 2000)

@@ -13,7 +13,7 @@ export default function SellerTicketsPage() {
     useEffect(() => {
         const fetchSellerTickets = async () => {
             try {
-                const response = await axios_api.get(`/api/tickets?sellerId=${sellerId}`)
+                const response = await axios_api.get(`/tickets?sellerId=${sellerId}`)
                 setTickets(response.data)
             } catch (err) {
                 setError("Errore durante il caricamento dei biglietti del venditore.")

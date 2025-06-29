@@ -14,8 +14,13 @@ export default function TicketList({ title = "Biglietti", limit = null, showSeeA
     useEffect(() => {
         const fetchTickets = async () => {
             try {
-                const response = await axios_api.get("/api/tickets")
+                const response = await axios_api.get("/tickets")
                 const allTickets = response.data
+                console.log("🎯 Risposta completa:", response)
+                console.log("📦 Data ricevuta:", response.data)
+                if (!Array.isArray(response.data)) {
+                    console.error("❌ Non è un array! Hai ricevuto:", response.data)
+                }
                 setTickets(limit ? allTickets.slice(0, limit) : allTickets)
             } catch (err) {
                 setError("Errore durante il caricamento dei biglietti.")
@@ -33,11 +38,12 @@ export default function TicketList({ title = "Biglietti", limit = null, showSeeA
                 {loading && <Spinner animation="border" />}
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Row>
-                    {tickets.map(ticket => (
-                        <Col key={ticket.id} md={6} lg={4}>
-                            <TicketCard ticket={ticket} />
-                        </Col>
-                    ))}
+                    {Array.isArray(tickets) &&
+                        tickets.map(ticket => (
+                            <Col key={ticket.id} md={6} lg={4}>
+                                <TicketCard ticket={ticket} />
+                            </Col>
+                        ))}
                 </Row>
                 {showSeeAllButton && (
                     <div className="text-center mt-4">
