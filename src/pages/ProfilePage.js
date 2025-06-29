@@ -16,7 +16,7 @@ export default function ProfilePage() {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const data = await authorizedRequest("/api/profile")
+                const data = await authorizedRequest("/profile")
                 if (data) setProfile(data)
             } catch (error) {
                 if (error.response?.status === 404) {

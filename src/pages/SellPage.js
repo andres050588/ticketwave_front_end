@@ -47,7 +47,7 @@ export default function SellPage() {
                 formData.append("eventDate", values.eventDate)
                 formData.append("image", values.image)
 
-                await authorizedRequest("/api/tickets", "post", {
+                await authorizedRequest("/tickets", "post", {
                     data: formData
                 })
 

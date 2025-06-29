@@ -30,7 +30,7 @@ export default function LoginPage() {
         }),
         onSubmit: async values => {
             try {
-                const response = await axios_api.post("/login", values)
+                const response = await axios_api.post("/users/login", values)
                 localStorage.setItem("token", response.data.token)
                 login(response.data.token)
                 navigate(location.state?.from || "/tickets")

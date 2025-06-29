@@ -10,12 +10,9 @@ export const useAuthRequest = () => {
         async (url, method = "get", config = {}) => {
             const token = localStorage.getItem("token")
             try {
-                const baseURL = process.env.REACT_APP_API_URL?.replace(/\/$/, "")
-                const fullUrl = url.startsWith("http") ? url : `${baseURL}/${url.replace(/^\//, "")}`
-
                 const response = await axios_api({
                     method,
-                    url: fullUrl,
+                    url,
                     headers: {
                         ...(config.headers || {}),
                         ...(token && { Authorization: `Bearer ${token}` })

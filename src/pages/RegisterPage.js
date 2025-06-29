@@ -24,7 +24,7 @@ export default function RegisterPage() {
         }),
         onSubmit: async values => {
             try {
-                const response = await axios_api.post("/register", values)
+                const response = await axios_api.post("/users/register", values)
                 localStorage.setItem("token", response.data.token)
                 login(response.data.token)
                 navigate("/tickets")

@@ -13,7 +13,7 @@ export default function OrdersPage() {
     const loadOrders = useCallback(async () => {
         setLoading(true)
         try {
-            const data = await authorizedRequest(`/api/orders`)
+            const data = await authorizedRequest(`/orders`)
             if (Array.isArray(data)) setOrders(data)
         } catch {
             console.error("Errore nel recupero degli ordini")
@@ -38,7 +38,7 @@ export default function OrdersPage() {
     // complete order
     const handleComplete = async orderId => {
         try {
-            const result = await authorizedRequest(`/api/orders/${orderId}/complete`, "post")
+            const result = await authorizedRequest(`/orders/${orderId}/complete`, "post")
 
             if (result) {
                 setSuccess("Ordine completato con successo")
@@ -52,7 +52,7 @@ export default function OrdersPage() {
     // cancellazione order
     const handleCancel = async orderId => {
         try {
-            const result = await authorizedRequest(`/api/orders/${orderId}`, "delete")
+            const result = await authorizedRequest(`/orders/${orderId}`, "delete")
             if (result) {
                 setSuccess("Ordine annullato")
                 await loadOrders() // Caricamento ordini dopo aver annullato un ordine
@@ -80,12 +80,12 @@ export default function OrdersPage() {
                     <Col md={4} key={order.id} className="mb-4">
                         <Card>
                             <Card.Body>
-                                <Card.Title>{order.Ticket.title}</Card.Title>
-                                <Card.Text>Prezzo: €{order.Ticket.price}</Card.Text>
+                                <Card.Title>{order.ticket.title}</Card.Title>
+                                <Card.Text>Prezzo: €{order.ticket.price}</Card.Text>
                                 <Card.Text>
                                     Stato: <Badge bg={order.status === "acquistato" ? "success" : order.status === "impegnato" ? "warning" : "secondary"}>{order.status}</Badge>
                                 </Card.Text>
-                                {order.Ticket.eventDate && <Card.Text>Data evento: {new Date(order.Ticket.eventDate).toLocaleString("it-IT")}</Card.Text>}
+                                {order.ticket.eventDate && <Card.Text>Data evento: {new Date(order.ticket.eventDate).toLocaleString("it-IT")}</Card.Text>}
                                 {order.status === "impegnato" && (
                                     <>
                                         <Button variant="success" size="sm" className="me-2" onClick={() => handleComplete(order.id)}>
