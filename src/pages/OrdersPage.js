@@ -79,6 +79,7 @@ export default function OrdersPage() {
                 {orders.map(order => (
                     <Col md={4} key={order.id} className="mb-4">
                         <Card>
+                            {order.ticket.imageURL && <Card.Img variant="top" src={order.ticket.imageURL} alt="Immagine biglietto" />}
                             <Card.Body>
                                 <Card.Title>{order.ticket.title}</Card.Title>
                                 <Card.Text>Prezzo: €{order.ticket.price}</Card.Text>

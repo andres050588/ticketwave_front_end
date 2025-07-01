@@ -16,7 +16,8 @@ export default function ProfilePage() {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const data = await authorizedRequest("/profile")
+                const data = await authorizedRequest("users/profile")
+
                 if (data) setProfile(data)
             } catch (error) {
                 if (error.response?.status === 404) {
@@ -46,7 +47,13 @@ export default function ProfilePage() {
                     <Card.Body>
                         <Card.Title>{profile.name}</Card.Title>
                         <Card.Text>Email: {profile.email}</Card.Text>
-                        <Card.Text>Registrato il: {profile.createdAt}</Card.Text>
+                        <Card.Text>
+                            Registrato il:{" "}
+                            {new Date(profile.createdAt).toLocaleString("it-IT", {
+                                dateStyle: "long",
+                                timeStyle: "short"
+                            })}
+                        </Card.Text>
                         <Button
                             variant="outline-danger"
                             className="mt-3"

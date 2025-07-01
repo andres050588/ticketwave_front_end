@@ -1,4 +1,3 @@
-// src/components/TicketList.js
 import { useEffect, useState } from "react"
 import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
@@ -16,8 +15,7 @@ export default function TicketList({ title = "Biglietti", limit = null, showSeeA
             try {
                 const response = await axios_api.get("/tickets")
                 const allTickets = response.data
-                console.log("🎯 Risposta completa:", response)
-                console.log("📦 Data ricevuta:", response.data)
+
                 if (!Array.isArray(response.data)) {
                     console.error("❌ Non è un array! Hai ricevuto:", response.data)
                 }
